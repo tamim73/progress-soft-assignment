@@ -1,0 +1,40 @@
+<div class="row align-items-center justify-content-center px-4">
+
+    <!-- general search -->
+    <div class="col pb-0 fs1" style="  padding: 1rem;">
+        <mat-form-field floatLabel="never" appearance="outline" style="width: 100%;">
+            <mat-label class="">Type to search</mat-label>
+            <input matInput [formControl]="mainSearch">
+            <mat-icon matPrefix color="primary" class="mr-3">search</mat-icon>
+        </mat-form-field>
+    </div>
+
+    <ng-container *ngIf="enableAdvancedSearch">
+        <!-- advanced search trigger-->
+        <div class="col-md-3 col-sm-12 d-flex justify-content-end  justify-content-lg-center mb-3 ">
+            <button (click)="collapse.toggle()" mat-button color="primary" class="pl-1 fw-550 w-100 mx-3">
+                <mat-icon class="mx-2">keyboard_arrow_{{collapse.expanded?'up':'down'}}</mat-icon>
+                Advanced Search
+            </button>
+        </div>
+
+        <mat-expansion-panel #collapse class="mat-elevation-z0 col-12">
+            <!-- advanced search body -->
+            <div #searchBody>
+                <ng-content select="[searchBody]"></ng-content>
+            </div>
+            <!-- advanced search actions -->
+            <div class="d-flex justify-content-end px-md-4 pb-4 fw6">
+                <button mat-raised-button color="basic" (click)="clearSearch()" class="text-muted mx-2">
+                    Clear
+                </button>
+
+                <button mat-raised-button color="primary" (click)="submitSearchReq()" class="mx-2">
+                    Search
+                </button>
+            </div>
+
+        </mat-expansion-panel>
+    </ng-container>
+
+</div>
