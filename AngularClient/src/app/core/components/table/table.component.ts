@@ -5,98 +5,55 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { startWith, delay } from 'rxjs/operators';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+    selector: 'app-table',
+    templateUrl: './table.component.html',
+    styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  private subscription: Subscription;
-  pageSizeOptions = [5, 10, 25, 50];
+    private subscription: Subscription;
+    pageSizeOptions = [5, 10, 25, 50];
 
-  @Input() cols: ITableCol[];
-  @Input() dataRoute: string;
+    @Input() cols: ITableCol[];
+    @Input() data: any[] = [];
 
-  @Output() tableEvent = new EventEmitter<ITableEvent>();
+    @Output() tableEvent = new EventEmitter<ITableEvent>();
 
-  searchRequest: any;
-  displayedColumns: string[] = [];
-  // dataSource: AssignmentDataSource;
+    searchRequest: any;
+    displayedColumns: string[] = [];
+    dataSource: MatTableDataSource<any[]>;
 
-  // private batchSubject = new BehaviorSubject<IBatchRequest>(this.batch);
-  // public batch$ = this.batchSubject.asObservable();
+    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+    @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-
-  ngOnInit() {
-    this.subscription = new Subscription();
-    this.displayedColumns = this.cols.map(col => col.name);
-    this.displayedColumns.unshift('details'); // add arrows column
-    // this.dataSource = new AssignmentDataSource(this.http);
-  }
-
-  ngAfterViewInit() {
-    this.subscription.add(
-      // this.sort.sortChange.subscribe(sort => {
-      //   const PageNo = this.batchSubject.value.pageNo;
-      //   const PageSize = this.batchSubject.value.pageSize;
-      //   this.batchSubject.next({
-      //     pageNo: PageNo,
-      //     pageSize: PageSize,
-      //     sortOrder: sort.direction,
-      //     sortProperty: sort.active,
-      //   });
-      // })
-    );
-
-    this.subscription.add(
-      // this.paginator.page.subscribe(paginator => {
-      //   const SortOrder = this.batchSubject.value.sortOrder;
-      //   const SortProperty = this.batchSubject.value.sortProperty;
-      //   this.batchSubject.next({
-      //     pageNo: paginator.pageIndex + 1, // mat-paginator start at 0
-      //     pageSize: paginator.pageSize,
-      //     sortOrder: SortOrder,
-      //     sortProperty: SortProperty,
-      //   });
-      // })
-    );
-
-    // this.subscription.add(
-    //   this.batchSubject
-    //     .pipe(
-    //       delay(0)
-    //     )
-    //     .subscribe(() => this.loadTable())
-    // );
-  }
-
-  loadTable(searchRequest?: any) {
-    if (searchRequest) {
-      this.searchRequest = searchRequest; // store search req to prevent losing when paginating
+    ngOnInit() {
+        this.subscription = new Subscription();
+        this.dataSource = new MatTableDataSource(this.data);
+        this.displayedColumns = this.cols.map(col => col.name);
+        this.displayedColumns.unshift('details'); // add arrows column
     }
-    // this.dataSource.load(this.dataRoute, this.batchSubject.value, this.searchRequest);
-  }
 
-  resetTable() {
-    // this.batchSubject.next(this.batch);
-  }
+    ngAfterViewInit() {
+    }
 
-  onActionClicked(actionName: string, row: any) {
-    const event: ITableEvent = {
-      action: actionName,
-      row
-    };
-    this.tableEvent.emit(event);
-  }
+    applyFilter(filterValue: string) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+    onActionClicked(actionName: string, row: any) {
+        const event: ITableEvent = {
+            action: actionName,
+            row
+        };
+        this.tableEvent.emit(event);
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
 }

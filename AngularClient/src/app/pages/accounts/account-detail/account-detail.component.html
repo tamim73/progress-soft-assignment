@@ -1,1 +1,69 @@
-<p>account-detail works!</p>
+<div class="d-flex justify-content-between border-bottom p-4">
+    <!-- title -->
+    <div class="fw-550 fs-115">{{title}}</div>
+    <!-- actions -->
+    <div *ngIf="mode === 'add'" class="d-flex justify-content-end align-items-center">
+        <mat-progress-bar mode="indeterminate" *ngIf="loading$ | async" class="mx-3">
+        </mat-progress-bar>
+
+
+    </div>
+</div>
+
+<div class="p-3">
+
+    <form [formGroup]="accountFG" class="row">
+        <div *ngFor="let field of accountFormFields" [ngClass]="field.type === 'area' ? 'col-12' : 'col-md-4'">
+
+            <ng-container [ngSwitch]="true">
+
+                <ng-container *ngSwitchCase="field.type==='text'||field.type==='number'||field.type==='tel'">
+                    <mat-form-field appearance="legacy" class="w-100 p-3">
+                        <mat-label>{{field.label}}
+                            <span *ngIf="field.errors['required']" class="text-danger">*</span>
+                        </mat-label>
+                        <input matInput
+                               [placeholder]="field.placeholder"
+                               [formControlName]="field.name"
+                               [type]="field.type">
+                        <mat-error>{{getErrorMessage(field.name)}}</mat-error>
+                    </mat-form-field>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="field.type === 'area'">
+                    <mat-form-field appearance="legacy" class="w-100 p-3">
+                        <mat-label>{{field.label}}
+                            <span *ngIf="field.errors['required']" class="text-danger">*</span>
+                        </mat-label>
+                        <textarea matInput
+                                  cdkTextareaAutosize
+                                  cdkAutosizeMinRows="5"
+                                  [placeholder]="field.placeholder"
+                                  [formControlName]="field.name"
+                                  class="overflow-hidden">
+                                    </textarea>
+                        <mat-error>{{getErrorMessage(field.name)}}</mat-error>
+                    </mat-form-field>
+                </ng-container>
+
+            </ng-container><!-- end switch -->
+
+        </div> <!-- end for -->
+
+        <!-- form actions -->
+        <div *ngIf="accountFG.enabled" class="d-flex flex-row-reverse align-items-center ml-auto px-4">
+            <button mat-raised-button (click)="submit()" [disabled]="loading$ | async" color="primary" class="mx-2">
+                <i class="material-icons mr-2 py-2">save</i>
+                {{submitLabel || 'Submit'}}
+                <mat-icon *ngIf="loading$ | async">
+                    <mat-spinner class="ml-auto" diameter="20"></mat-spinner>
+                </mat-icon>
+            </button>
+
+            <button mat-stroked-button (click)="reset()" type="reset" class="text-muted mx-2">
+                Clear
+            </button>
+        </div>
+    </form>
+
+</div>

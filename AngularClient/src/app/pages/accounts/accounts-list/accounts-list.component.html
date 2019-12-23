@@ -1,1 +1,23 @@
-<p>accounts-list works!</p>
+<div class="d-flex flex-wrap justify-content-between border-bottom p-4">
+    <!-- title -->
+    <div class="fw-550 fs-115 text-nowrap">Accounts List</div>
+    <!-- actions -->
+    <div class="d-flex flex-wrap justify-content-end">
+
+        <button mat-raised-button [routerLink]="'./add'" class="" color="primary">
+            <i class="material-icons">add</i>
+            <span class="d-none d-sm-inline pl-2">Add Account</span>
+        </button>
+    </div>
+</div>
+
+<div class="p-3">
+    <app-search (clearSearchEvent)="clearSearchEventHandler()"
+                (searchEvent)="searchEventHandler($event)">
+    </app-search>
+    <app-table #table
+               [cols]="accountColumns"
+               [data]="[]"
+               (tableEvent)="tableEventHandler($event)">
+    </app-table>
+</div>

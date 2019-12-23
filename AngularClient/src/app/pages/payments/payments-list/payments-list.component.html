@@ -1,70 +1,23 @@
 <div class="d-flex flex-wrap justify-content-between border-bottom p-4">
     <!-- title -->
-    <div class="fw-550 fs-115 text-nowrap">Employees List</div>
+    <div class="fw-550 fs-115 text-nowrap">Payments List</div>
     <!-- actions -->
-    <div class="d-none d-sm-flex flex-wrap justify-content-end">
-        <button mat-stroked-button (click)="getExcel()" class="mx-2" color="primary"
-                matTooltip="Export active employees as excel sheet">
-            <i class="material-icons mr-2">assignment</i>
-            <span class="d-none d-xl-inline">Active employees</span>
+    <div class="d-flex flex-wrap justify-content-end">
+
+        <button mat-raised-button [routerLink]="'./add'" class="" color="primary">
+            <i class="material-icons">add</i>
+            <span class="d-none d-sm-inline pl-2">Add Payment</span>
         </button>
-
-        <button mat-stroked-button (click)="getExcelStatistics()" class="mx-2" color="primary"
-                matTooltip="Export employees statistics as excel sheet">
-            <i class="material-icons mr-2">timeline</i>
-            <span class="d-none d-xl-inline">Statistics report</span>
-        </button>
-
-        <button *ngIf="canAdd" mat-raised-button [routerLink]="'./add'" class="mx-2" color="primary">
-            <i class="material-icons mr-2 py-2">add</i>Add Employee
-        </button>
-    </div>
-    <!-- mobile -->
-    <div class="d-sm-none">
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-            <!-- navs -->
-            <button mat-menu-item [routerLink]="'./add'">
-                <mat-icon>add</mat-icon>
-                <span>Add Employee</span>
-            </button>
-
-            <button mat-menu-item (click)="getExcel()">
-                <mat-icon>assignment</mat-icon>
-                <span>Active employees</span>
-            </button>
-
-            <button mat-menu-item (click)="getExcelStatistics()">
-                <mat-icon>timeline</mat-icon>
-                <span>Statistics report</span>
-            </button>
-
-        </mat-menu>
     </div>
 </div>
 
 <div class="p-3">
-    <app-search [enableAdvancedSearch]="true"
-                (clearSearchEvent)="clearSearchEventHandler()"
+    <app-search (clearSearchEvent)="clearSearchEventHandler()"
                 (searchEvent)="searchEventHandler($event)">
-
-        <div searchBody class="px-4">
-            <form [formGroup]="searchFG" class="row">
-
-                <ng-container *ngFor="let field of searchFields">
-                    <mat-form-field appearance="fill" class="col-md-4 fs-85 w-100 p-3">
-                        <mat-label>{{field.label}}</mat-label>
-                        <mat-select [placeholder]="field.placeholder"
-                                    [formControlName]="field.name">
-                            <mat-option *ngFor="let opt of field.options" [value]="opt.value">{{opt.label}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </ng-container>
-
-            </form>
-        </div>
-
     </app-search>
+    <app-table #table
+               [cols]="columns"
+               [data]="[]"
+               (tableEvent)="tableEventHandler($event)">
+    </app-table>
+</div>

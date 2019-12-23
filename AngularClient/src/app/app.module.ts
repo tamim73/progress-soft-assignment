@@ -10,24 +10,26 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
 
-    MatToolbarModule,
-    MatProgressBarModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    MatMenuModule,
-    MatIconModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+        MatToolbarModule,
+        MatProgressBarModule,
+        MatButtonModule,
+        MatSnackBarModule,
+        MatMenuModule,
+        MatIconModule,
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
