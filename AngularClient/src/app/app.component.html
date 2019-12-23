@@ -6,68 +6,68 @@
 
 <mat-toolbar class="app-toolbar flex-wrap justify-content-between mat-elevation-z3"
              style="position: fixed;z-index: 100;">
-  <!-- title -->
-  <div class="pointer mx-3" [routerLink]="[ '']">
-    Simple Payment Assignment
-  </div>
-
-  <!-- navs -->
-  <div class="d-none d-md-flex" *ngIf="isLoggedIn()">
-    <a mat-stroked-button
-       class="mx-3"
-       routerLink="app/account">
-      Accounts
-    </a>
-    <a mat-stroked-button *ngIf="isAdmin()"
-       class="mx-3"
-       routerLink="app/payment">
-      Payments
-    </a>
-  </div>
-
-  <!-- login -->
-  <div class="d-none d-md-flex align-items-center">
-    <div *ngIf="isLoggedIn()" class="d-none d-xl-flex">
-      <span class="fs-075 text-secondary mr-2">Hi,</span>
-      <span class="fs-075 fw-550 text-muted ">{{getName()}}</span>
+    <!-- title -->
+    <div class="pointer mx-3" [routerLink]="[ '']">
+        <!-- Simple Payment Assignment -->
     </div>
-    <a mat-stroked-button
-       class="mx-3"
-       color="accent"
-       (click)="login()">
-      {{ isLoggedIn() ? 'Logout' : 'Login' }}
-      <i class="material-icons ml-3"
-         matTooltip="Sing out">
-        {{ isLoggedIn() ? 'settings_power' : 'input' }}
-      </i>
-    </a>
-  </div>
 
-  <!-- mobile -->
-  <div class="d-md-none">
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <!-- navs -->
-      <button mat-menu-item *ngIf="isLoggedIn()" routerLink="app/employees">
-        <mat-icon>business</mat-icon>
-        <span>Employees</span>
-      </button>
-      <button mat-menu-item *ngIf="isLoggedIn()" routerLink="app/users">
-        <mat-icon>account_box</mat-icon>
-        <span>Application Users</span>
-      </button>
+    <!-- navs -->
+    <div class="d-none d-md-flex" *ngIf="isLoggedIn()">
+        <a mat-stroked-button
+           class="mx-3"
+           routerLink="app/account">
+            Accounts
+        </a>
+        <a mat-stroked-button *ngIf="isAdmin()"
+           class="mx-3"
+           routerLink="app/payment">
+            Payments
+        </a>
+    </div>
 
-      <button mat-menu-item (click)="login()">
-        <mat-icon>{{ isLoggedIn() ? 'settings_power' : 'input' }}</mat-icon>
-        <span>{{ isLoggedIn() ? 'Logout' : 'Login' }}</span>
-      </button>
-    </mat-menu>
-  </div>
+    <!-- login -->
+    <div class="d-none d-md-flex align-items-center">
+        <div *ngIf="isLoggedIn()" class="d-none d-xl-flex">
+            <span class="fs-075 text-secondary mr-2">Hi,</span>
+            <span class="fs-075 fw-550 text-muted ">{{getName()}}</span>
+        </div>
+        <a mat-stroked-button
+           class="mx-3"
+           color="accent"
+           (click)="login()">
+            {{ isLoggedIn() ? 'Logout' : 'Login' }}
+            <i class="material-icons ml-3"
+               matTooltip="Sing out">
+                {{ isLoggedIn() ? 'settings_power' : 'input' }}
+            </i>
+        </a>
+    </div>
+
+    <!-- mobile -->
+    <div class="d-md-none">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <!-- navs -->
+            <button mat-menu-item *ngIf="isLoggedIn()" routerLink="app/employees">
+                <mat-icon>business</mat-icon>
+                <span>Employees</span>
+            </button>
+            <button mat-menu-item *ngIf="isLoggedIn()" routerLink="app/users">
+                <mat-icon>account_box</mat-icon>
+                <span>Application Users</span>
+            </button>
+
+            <button mat-menu-item (click)="login()">
+                <mat-icon>{{ isLoggedIn() ? 'settings_power' : 'input' }}</mat-icon>
+                <span>{{ isLoggedIn() ? 'Logout' : 'Login' }}</span>
+            </button>
+        </mat-menu>
+    </div>
 
 </mat-toolbar>
 
 <div class="container h-100 app-content">
-  <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
 </div>

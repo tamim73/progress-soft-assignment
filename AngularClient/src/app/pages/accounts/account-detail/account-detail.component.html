@@ -54,13 +54,13 @@
         <div *ngIf="accountFG.enabled" class="d-flex flex-row-reverse align-items-center ml-auto px-4">
             <button mat-raised-button (click)="submit()" [disabled]="loading$ | async" color="primary" class="mx-2">
                 <i class="material-icons mr-2 py-2">save</i>
-                {{submitLabel || 'Submit'}}
+                Submit
                 <mat-icon *ngIf="loading$ | async">
                     <mat-spinner class="ml-auto" diameter="20"></mat-spinner>
                 </mat-icon>
             </button>
 
-            <button mat-stroked-button (click)="reset()" type="reset" class="text-muted mx-2">
+            <button mat-stroked-button type="reset" class="text-muted mx-2">
                 Clear
             </button>
         </div>

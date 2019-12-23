@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AccountsService } from '../accounts.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { IAccount } from '../accounts.model';
 
 @Component({
     selector: 'app-account-detail',
@@ -26,8 +27,8 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
             name: 'accountNumber',
             errors: {
                 required: 'Account number is required',
-                minLength: 'Minimum length is 6 digits',
-                maxLength: 'Maximum length is 6 digits',
+                minlength: 'Minimum length is 6 digits',
+                maxlength: 'Maximum length is 6 digits',
             },
             label: 'Account Number',
             type: 'number',
@@ -88,12 +89,19 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    reset() {
-        // this.accountFG.reset();
-    }
-
     submit() {
-        console.log(this.accountFG.valid, this.accountFG.value);
+        if (this.accountFG.valid) {
+            const request: IAccount = {
+                accountHolderName: this.accountFG.value.accountHolderName,
+                accountNumber: +this.accountFG.value.accountNumber,
+                accountDescription: this.accountFG.value.accountDescription,
+                accountHolderPhoneNumber: this.accountFG.value.accountHolderPhoneNumber,
+            };
+
+            this.accountService.addAccount(request).subscribe(res => {
+                console.log(res);
+            });
+        }
     }
 
 

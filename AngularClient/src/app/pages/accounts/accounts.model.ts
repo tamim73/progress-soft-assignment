@@ -1,6 +1,6 @@
 export interface IAccount {
 
-    id: string;
+    id?: string;
 
     accountNumber: number;
 
