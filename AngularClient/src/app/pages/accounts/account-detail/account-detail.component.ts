@@ -68,7 +68,7 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
     ngOnInit() {
 
         this.accountFG = this.fb.group({
-            accountNumber: ['', [Validators.required, Validators.maxLength(6)]],
+            accountNumber: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
             accountHolderName: ['', [Validators.required]],
             accountHolderPhoneNumber: ['', []],
             accountDescription: ['', [Validators.maxLength(1000)]],

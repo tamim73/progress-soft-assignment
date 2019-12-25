@@ -22,7 +22,7 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
 
     displayedColumns: string[] = [];
 
-    private dataSource: MatTableDataSource<any[]>;
+    dataSource: MatTableDataSource<any[]>;
 
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
     @ViewChild(MatSort, { static: true }) sort: MatSort;
