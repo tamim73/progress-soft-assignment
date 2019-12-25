@@ -33,24 +33,18 @@ export class AppComponent {
 
   }
 
-  isAdmin() {
-    return true;
-    // return this.authService.isAdmin();
-  }
   isLoggedIn() {
-    return true;
-    // return this.authService.isLoggedIn();
+    return this.authService.isLoggedIn;
   }
   getName(): string {
-    return 'Admin';
-    // return this.authService.loggedInAs();
+    return this.authService.user.username;
   }
 
   login() {
-    // if (this.isLoggedIn()) {
-    //   this.authService.logout();
-    // } else {
-    //   this.router.navigate(['auth/login']);
-    // }
+    if (this.isLoggedIn()) {
+      this.authService.logOut();
+    } else {
+      this.router.navigate(['auth/login']);
+    }
   }
 }

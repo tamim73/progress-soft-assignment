@@ -3,6 +3,8 @@ import { AccountsService } from '../accounts.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { IAccount } from '../accounts.model';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-account-detail',
@@ -14,7 +16,8 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
     constructor(
         private accountService: AccountsService,
         private fb: FormBuilder,
-
+        private alert: AlertService,
+        private router: Router,
     ) { }
 
     title: string;
@@ -65,18 +68,19 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
     ngOnInit() {
 
         this.accountFG = this.fb.group({
-            accountNumber: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
+            accountNumber: ['', [Validators.required, Validators.maxLength(6)]],
             accountHolderName: ['', [Validators.required]],
             accountHolderPhoneNumber: ['', []],
             accountDescription: ['', [Validators.maxLength(1000)]],
         });
 
-        this.mode = this.accountService.hasActiveEmployee() ? 'details' : 'add';
+        this.mode = this.accountService.hasActiveAccount() ? 'details' : 'add';
 
         if (this.mode === 'add') {
             this.title = 'Add Account';
         } else {
             this.title = 'Account Details';
+            this.accountFG.patchValue(this.accountService.activeAccount());
             this.accountFG.disable();
         }
     }
@@ -99,7 +103,8 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
             };
 
             this.accountService.addAccount(request).subscribe(res => {
-                console.log(res);
+                this.alert.showSuccess('Account added successfully');
+                this.router.navigate(['app/account']);
             });
         }
     }

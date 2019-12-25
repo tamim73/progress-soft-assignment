@@ -1,6 +1,6 @@
 export interface IPayment {
 
-    id: string;
+    id?: string;
 
     // Amount, positive numeric value.
     amount: number;

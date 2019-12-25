@@ -19,8 +19,10 @@ export class AccountsService implements CanActivate {
     accountURL = environment.apiURL + 'account';
 
     private activeAccountSubject = new BehaviorSubject<IAccount>(null);
-    public activeAccount$ = this.activeAccountSubject.asObservable();
 
+    activeAccount(): IAccount {
+        return this.activeAccountSubject.value;
+    }
 
     getAllAccounts(): Observable<IAccount[]> {
         return this.http.get<IAccount[]>(this.accountURL);
@@ -34,7 +36,7 @@ export class AccountsService implements CanActivate {
         return this.http.post<IAccount>(this.accountURL + '/add', request);
     }
 
-    hasActiveEmployee(): boolean {
+    hasActiveAccount(): boolean {
         return !!this.activeAccountSubject.value;
     }
 
@@ -67,5 +69,17 @@ export class AccountsService implements CanActivate {
         }
         this.goHome();
         return of(false);
+    }
+
+    openAccountDetails(account: IAccount) {
+        const id = account.id;
+        if (id) {
+            this.getAccountById(id).subscribe(accountDetails => {
+                this.activeAccountSubject.next(accountDetails);
+                this.router.navigate([`app/account/${id}`]);
+            });
+        } else {
+            this.router.navigate([`app/employees/add`]);
+        }
     }
 }

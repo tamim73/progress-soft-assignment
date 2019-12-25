@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ITableCol, ITableEvent } from 'src/app/core/components/table/table.models';
 import { AccountsService } from '../accounts.service';
 import { TableComponent } from 'src/app/core/components/table/table.component';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-accounts-list',
@@ -14,7 +15,7 @@ export class AccountsListComponent implements OnInit, AfterViewInit {
     ) { }
 
     @ViewChild('table', { static: false }) accountsTable: TableComponent;
-
+    isloading = true;
     accountColumns: ITableCol[] = [
         {
             name: 'id',
@@ -32,26 +33,31 @@ export class AccountsListComponent implements OnInit, AfterViewInit {
             name: 'accountHolderPhoneNumber',
             label: 'Account Holder Phone Number',
         },
-        {
-            name: 'accountDescription',
-            label: 'Account Description',
-        },
     ];
 
     ngOnInit() {
     }
 
     ngAfterViewInit(): void {
-        this.accountService.getAllAccounts().subscribe(res => {
-            console.log(res);
+        this.accountService.getAllAccounts()
+            .pipe(
+                finalize(() => this.isloading = false)
+            )
+            .subscribe(res => {
+                console.log(res);
 
-            this.accountsTable.updateData(res);
-        });
+                this.accountsTable.updateData(res);
+            });
+    }
+
+    searchEventHandler(text: string) {
+        this.accountsTable.applyFilter(text);
     }
 
     tableEventHandler(e: ITableEvent) {
-        console.log('clicked on row => ', e.row);
-        // this.employeesService.openEmployeeDetails(e.row.id);
+        const account = e.row;
+        console.log('clicked on row => ', account);
+        this.accountService.openAccountDetails(account);
     }
 
 }

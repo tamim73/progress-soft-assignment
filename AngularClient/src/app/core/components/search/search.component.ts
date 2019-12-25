@@ -25,7 +25,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.subscription.add(
             this.mainSearch.valueChanges
                 .pipe(
-                    debounceTime(737),
+                    debounceTime(500),
                     distinctUntilChanged(),
                 )
                 .subscribe(value => {

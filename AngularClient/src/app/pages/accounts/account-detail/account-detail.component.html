@@ -20,7 +20,7 @@
                 <ng-container *ngSwitchCase="field.type==='text'||field.type==='number'||field.type==='tel'">
                     <mat-form-field appearance="legacy" class="w-100 p-3">
                         <mat-label>{{field.label}}
-                            <span *ngIf="field.errors['required']" class="text-danger">*</span>
+                            <span *ngIf="mode === 'add' && field.errors['required']" class="text-danger">*</span>
                         </mat-label>
                         <input matInput
                                [placeholder]="field.placeholder"
@@ -32,9 +32,7 @@
 
                 <ng-container *ngSwitchCase="field.type === 'area'">
                     <mat-form-field appearance="legacy" class="w-100 p-3">
-                        <mat-label>{{field.label}}
-                            <span *ngIf="field.errors['required']" class="text-danger">*</span>
-                        </mat-label>
+                        <mat-label>{{field.label}}</mat-label>
                         <textarea matInput
                                   cdkTextareaAutosize
                                   cdkAutosizeMinRows="5"

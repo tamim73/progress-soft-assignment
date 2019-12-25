@@ -8,17 +8,17 @@
              style="position: fixed;z-index: 100;">
     <!-- title -->
     <div class="pointer mx-3" [routerLink]="[ '']">
-        <!-- Simple Payment Assignment -->
+        Simple Payment Assignment
     </div>
 
     <!-- navs -->
-    <div class="d-none d-md-flex" *ngIf="isLoggedIn()">
+    <div *ngIf="isLoggedIn()" class="d-none d-md-flex">
         <a mat-stroked-button
            class="mx-3"
            routerLink="app/account">
             Accounts
         </a>
-        <a mat-stroked-button *ngIf="isAdmin()"
+        <a mat-stroked-button
            class="mx-3"
            routerLink="app/payment">
             Payments

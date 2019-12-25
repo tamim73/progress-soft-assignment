@@ -12,12 +12,15 @@
 </div>
 
 <div class="p-3">
-    <app-search (clearSearchEvent)="clearSearchEventHandler()"
-                (searchEvent)="searchEventHandler($event)">
-    </app-search>
+    <app-search (searchEvent)="searchEventHandler($event)"></app-search>
+
+    <div style="height: 2px">
+        <mat-progress-bar mode="indeterminate" *ngIf="isloading" style="height: 2px !important;">
+        </mat-progress-bar>
+    </div>
+
     <app-table #table
-               [cols]="columns"
-               [data]="[]"
+               [cols]="paymentColumns"
                (tableEvent)="tableEventHandler($event)">
     </app-table>
 </div>

@@ -1,0 +1,48 @@
+<div class="d-flex flex-column justify-content-center align-items-center">
+
+    <h2 class="text-muted pt-sm-5 my-5">Login to your account</h2>
+
+    <!-- login form -->
+    <form class="fs-115"
+          style="max-width: 450px;"
+          (ngSubmit)="onLogInClick()"
+          [formGroup]="loginFG">
+
+        <!-- username -->
+        <mat-form-field appearance="fill" class="w-100 p-3">
+            <mat-label>Username</mat-label>
+            <input matInput
+                   placeholder="Enter Any Username"
+                   formControlName="username"
+                   type="text">
+            <mat-hint>Hint: Fake login</mat-hint>
+            <mat-error>Username is required</mat-error>
+        </mat-form-field>
+
+        <!-- password -->
+        <mat-form-field appearance="fill" class="w-100 p-3">
+            <mat-label>Password</mat-label>
+            <input matInput
+                   placeholder="Enter Any Password"
+                   formControlName="password"
+                   [type]="hidePass ? 'password' : 'text'">
+            <mat-icon matSuffix class="text-primary" (click)="hidePass = !hidePass">
+                {{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-hint>Hint: Fake login</mat-hint>
+            <mat-error>Password is required</mat-error>
+        </mat-form-field>
+
+        <div class="text-center m-2">
+            <button mat-raised-button
+                    type="submit" color="primary"
+                    class="w-75 py-2">
+                LOGIN
+                <!-- spinner -->
+                <mat-icon>
+                    <mat-spinner color="primary" class="ml-auto" diameter="20"></mat-spinner>
+                </mat-icon>
+            </button>
+        </div>
+
+    </form>
+</div>
