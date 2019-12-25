@@ -11,8 +11,12 @@ Prerequisites
 
 Get Started
 -------------------------------------------------------
-# Inside progress-soft-assignment folder run this command: "java –jar payments-system.jar"
-# Go in AngularClient folder then run this command: "ng s -o". make sure you have nodejs and angular cli installed
+# Inside progress-soft-assignment folder run this command: 
+	"java –jar payments-system.jar"
+# Go in AngularClient folder then run: 
+	"npm i"
+	"ng s -o"
+	* make sure you have nodejs and angular cli installed
 
 Github
 -------------------------------------------------------
