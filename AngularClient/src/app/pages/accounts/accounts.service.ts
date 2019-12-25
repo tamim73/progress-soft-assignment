@@ -31,7 +31,7 @@ export class AccountsService implements CanActivate {
     }
 
     addAccount(request: IAccount): Observable<IAccount> {
-        return this.http.post<IAccount>(this.accountURL, request);
+        return this.http.post<IAccount>(this.accountURL + '/add', request);
     }
 
     hasActiveEmployee(): boolean {

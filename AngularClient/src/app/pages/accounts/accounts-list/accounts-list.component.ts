@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ITableCol, ITableEvent } from 'src/app/core/components/table/table.models';
+import { AccountsService } from '../accounts.service';
+import { TableComponent } from 'src/app/core/components/table/table.component';
 
 @Component({
     selector: 'app-accounts-list',
     templateUrl: './accounts-list.component.html',
     styleUrls: ['./accounts-list.component.scss']
 })
-export class AccountsListComponent implements OnInit {
+export class AccountsListComponent implements OnInit, AfterViewInit {
+    constructor(
+        private accountService: AccountsService,
+    ) { }
 
-    constructor() { }
+    @ViewChild('table', { static: false }) accountsTable: TableComponent;
 
     accountColumns: ITableCol[] = [
         {
@@ -36,6 +41,13 @@ export class AccountsListComponent implements OnInit {
     ngOnInit() {
     }
 
+    ngAfterViewInit(): void {
+        this.accountService.getAllAccounts().subscribe(res => {
+            console.log(res);
+
+            this.accountsTable.updateData(res);
+        });
+    }
 
     tableEventHandler(e: ITableEvent) {
         console.log('clicked on row => ', e.row);

@@ -1,13 +1,13 @@
 <div style="height: 2px">
-    <mat-progress-bar mode="indeterminate" *ngIf="dataSource.loading$ | async" style="height: 2px !important;">
-    </mat-progress-bar>
+    <!-- <mat-progress-bar mode="indeterminate" *ngIf="dataSource.loading$ | async" style="height: 2px !important;">
+    </mat-progress-bar> -->
 </div>
 
 <div class="mat-table__wrapper">
 
     <table mat-table
            matSort
-           [dataSource]="data"
+           [dataSource]="dataSource"
            style="width: 100%">
 
         <ng-container matColumnDef="details">
@@ -49,7 +49,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onActionClicked('row_click',row)"></tr>
     </table>
 
-    <div class="mat-table__message" *ngIf="!data.length">No records found</div>
+    <div class="mat-table__message" *ngIf="!dataSource.data.length">No records found</div>
 </div> <!-- /mat-table__wrapper -->
 
 
@@ -57,11 +57,11 @@
 <div class="mat-table__bottom">
 
     <!-- spinner -->
-    <div *ngIf="dataSource.loading$ | async">
+    <!-- <div *ngIf="dataSource.loading$ | async">
         <mat-spinner class="ml-4" diameter="20"></mat-spinner>
-    </div>
+    </div> -->
 
     <!-- paginator -->
-    <mat-paginator class="ml-auto" [length]="dataSource.totalItems" [pageSize]="pageSizeOptions[1]"
+    <mat-paginator class="ml-auto" [pageSize]="pageSizeOptions[1]"
                    [pageSizeOptions]="pageSizeOptions"></mat-paginator>
 </div>

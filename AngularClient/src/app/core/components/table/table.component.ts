@@ -20,7 +20,6 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
     pageSizeOptions = [5, 10, 25, 50];
 
     @Input() cols: ITableCol[];
-    @Input() data: any[] = [];
 
     @Output() tableEvent = new EventEmitter<ITableEvent>();
 
@@ -33,12 +32,16 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit() {
         this.subscription = new Subscription();
-        this.dataSource = new MatTableDataSource(this.data);
+        this.dataSource = new MatTableDataSource([]);
         this.displayedColumns = this.cols.map(col => col.name);
         this.displayedColumns.unshift('details'); // add arrows column
     }
 
     ngAfterViewInit() {
+    }
+
+    updateData(data: any[]) {
+        this.dataSource.data = data;
     }
 
     applyFilter(filterValue: string) {
